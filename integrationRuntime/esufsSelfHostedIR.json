@@ -1,0 +1,6 @@
+{
+	"name": "esufsSelfHostedIR",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}

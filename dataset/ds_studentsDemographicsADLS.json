@@ -1,0 +1,27 @@
+{
+	"name": "ds_studentsDemographicsADLS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@concat(\n    'DemographicList_',\n    substring(utcNow(), 0, 10),\n    '.csv'\n)",
+					"type": "Expression"
+				},
+				"fileSystem": "studentdemographic"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,122 @@
+{
+	"name": "ds_emabi_sqldb",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_ema_bi_sql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "BusinessOfferingsID_Persisted",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "BusinessServiceOfferingNK",
+				"type": "varchar"
+			},
+			{
+				"name": "BusinessProfileNK",
+				"type": "varchar"
+			},
+			{
+				"name": "LegalBusinessName",
+				"type": "varchar"
+			},
+			{
+				"name": "ServiceCategoryNK",
+				"type": "varchar"
+			},
+			{
+				"name": "ServiceCategory",
+				"type": "varchar"
+			},
+			{
+				"name": "ServiceTypeNK",
+				"type": "varchar"
+			},
+			{
+				"name": "ServiceType",
+				"type": "varchar"
+			},
+			{
+				"name": "Rate",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "RatePeriod",
+				"type": "varchar"
+			},
+			{
+				"name": "AssignedToNK",
+				"type": "varchar"
+			},
+			{
+				"name": "AssignedToName",
+				"type": "varchar"
+			},
+			{
+				"name": "AssignedDate",
+				"type": "date"
+			},
+			{
+				"name": "ProcessingStartDate",
+				"type": "date"
+			},
+			{
+				"name": "ProcessingCompleteDate",
+				"type": "date"
+			},
+			{
+				"name": "Description",
+				"type": "varchar"
+			},
+			{
+				"name": "ProgramType",
+				"type": "varchar"
+			},
+			{
+				"name": "ApprovedProgramNK",
+				"type": "varchar"
+			},
+			{
+				"name": "IsActive",
+				"type": "bit"
+			},
+			{
+				"name": "ExternalStatus",
+				"type": "varchar"
+			},
+			{
+				"name": "InsertDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "InsertUser",
+				"type": "varchar"
+			},
+			{
+				"name": "UpdateDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "IsDeleted",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "ema",
+			"table": "BusinessOfferings_Persisted"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

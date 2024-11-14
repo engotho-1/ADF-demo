@@ -1,0 +1,17 @@
+{
+	"name": "ds_emabi_azuredb",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_az_emabi",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "az_BusinessOfferings"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

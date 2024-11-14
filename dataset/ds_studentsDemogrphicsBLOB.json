@@ -1,0 +1,65 @@
+{
+	"name": "ds_studentsDemogrphicsBLOB",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_studentsDemographics",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Student Demographics.csv",
+				"container": "students"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "StudentID",
+				"type": "String"
+			},
+			{
+				"name": "HouseholdID",
+				"type": "String"
+			},
+			{
+				"name": "PersonID",
+				"type": "String"
+			},
+			{
+				"name": "Programs",
+				"type": "String"
+			},
+			{
+				"name": "StudentFirstName",
+				"type": "String"
+			},
+			{
+				"name": "StudentMiddleName",
+				"type": "String"
+			},
+			{
+				"name": "StudentLastName",
+				"type": "String"
+			},
+			{
+				"name": "DateofBirth",
+				"type": "String"
+			},
+			{
+				"name": "Gender",
+				"type": "String"
+			},
+			{
+				"name": "Race",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

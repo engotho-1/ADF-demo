@@ -1,0 +1,57 @@
+{
+	"name": "ds_studentsDemographicsSQL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "StudentID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "HouseholdID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "PersonID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "StudentFirstName",
+				"type": "varchar"
+			},
+			{
+				"name": "StudentMiddleName",
+				"type": "varchar"
+			},
+			{
+				"name": "StudentLastName",
+				"type": "varchar"
+			},
+			{
+				"name": "DateofBirth",
+				"type": "date"
+			},
+			{
+				"name": "Gender",
+				"type": "varchar"
+			},
+			{
+				"name": "Race",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "ema_az",
+			"table": "StudentsDemographics"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,21 @@
+{
+	"name": "ls_sufsplsa_bi_sql",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"server": "az-tc-sql1",
+			"database": "SUFSPLSA_BI",
+			"encrypt": "optional",
+			"trustServerCertificate": false,
+			"authenticationType": "Windows",
+			"userName": "engotho@sufs.org",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI3OWM4YzYzNy0xMThiLTQ0NmMtOWJmMi1lYjA2ZWI1NWZlNmEiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "esufsSelfHostedIR",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

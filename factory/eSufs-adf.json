@@ -1,0 +1,9 @@
+{
+	"name": "eSufs-adf",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "6679fccd-608d-453c-a1aa-8da382b177fd",
+		"tenantId": "f0e2351b-d9f0-4a9d-9bdb-ee8be3a999a1"
+	}
+}
