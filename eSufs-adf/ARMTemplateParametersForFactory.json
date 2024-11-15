@@ -1,0 +1,78 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "eSufs-adf"
+		},
+		"ls_adls_accountKey": {
+			"value": ""
+		},
+		"ls_az_emabi_password": {
+			"value": ""
+		},
+		"ls_azuresql_password": {
+			"value": ""
+		},
+		"ls_ema_bi_sql_password": {
+			"value": ""
+		},
+		"ls_sqldb_password": {
+			"value": ""
+		},
+		"ls_studentsDemographics_connectionString": {
+			"value": ""
+		},
+		"ls_sufsplsa_bi_sql_password": {
+			"value": ""
+		},
+		"ls_adls_properties_typeProperties_url": {
+			"value": "https://esufsadlsgen2.dfs.core.windows.net/"
+		},
+		"ls_az_emabi_properties_typeProperties_server": {
+			"value": "esufs-server.database.windows.net"
+		},
+		"ls_az_emabi_properties_typeProperties_database": {
+			"value": "esufs-db"
+		},
+		"ls_az_emabi_properties_typeProperties_userName": {
+			"value": "edgarAdmin"
+		},
+		"ls_azuresql_properties_typeProperties_server": {
+			"value": "esufs-server.database.windows.net"
+		},
+		"ls_azuresql_properties_typeProperties_database": {
+			"value": "esufs-db"
+		},
+		"ls_azuresql_properties_typeProperties_userName": {
+			"value": "edgarAdmin"
+		},
+		"ls_ema_bi_sql_properties_typeProperties_server": {
+			"value": "az-tc-sql1"
+		},
+		"ls_ema_bi_sql_properties_typeProperties_database": {
+			"value": "EMA_BI"
+		},
+		"ls_ema_bi_sql_properties_typeProperties_userName": {
+			"value": "SUFS\\engotho"
+		},
+		"ls_sqldb_properties_typeProperties_server": {
+			"value": "esufs-server.database.windows.net"
+		},
+		"ls_sqldb_properties_typeProperties_database": {
+			"value": "esufs-db"
+		},
+		"ls_sqldb_properties_typeProperties_userName": {
+			"value": "edgarAdmin"
+		},
+		"ls_sufsplsa_bi_sql_properties_typeProperties_server": {
+			"value": "az-tc-sql1"
+		},
+		"ls_sufsplsa_bi_sql_properties_typeProperties_database": {
+			"value": "SUFSPLSA_BI"
+		},
+		"ls_sufsplsa_bi_sql_properties_typeProperties_userName": {
+			"value": "engotho@sufs.org"
+		}
+	}
+}

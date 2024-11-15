@@ -1,0 +1,1017 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "eSufs-adf"
+		},
+		"ls_adls_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ls_adls'"
+		},
+		"ls_az_emabi_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ls_az_emabi'"
+		},
+		"ls_azuresql_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ls_azuresql'"
+		},
+		"ls_sqldb_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ls_sqldb'"
+		},
+		"ls_studentsDemographics_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ls_studentsDemographics'"
+		},
+		"ls_ema_bi_sql_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ls_ema_bi_sql'"
+		},
+		"ls_sufsplsa_bi_sql_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ls_sufsplsa_bi_sql'"
+		},
+		"ls_adls_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://esufsadlsgen2.dfs.core.windows.net/"
+		},
+		"ls_az_emabi_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "esufs-server.database.windows.net"
+		},
+		"ls_az_emabi_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "esufs-db"
+		},
+		"ls_az_emabi_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "edgarAdmin"
+		},
+		"ls_azuresql_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "esufs-server.database.windows.net"
+		},
+		"ls_azuresql_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "esufs-db"
+		},
+		"ls_azuresql_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "edgarAdmin"
+		},
+		"ls_sqldb_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "esufs-server.database.windows.net"
+		},
+		"ls_sqldb_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "esufs-db"
+		},
+		"ls_sqldb_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "edgarAdmin"
+		},
+		"ls_ema_bi_sql_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "az-tc-sql1"
+		},
+		"ls_ema_bi_sql_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "EMA_BI"
+		},
+		"ls_ema_bi_sql_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "SUFS\\engotho"
+		},
+		"ls_sufsplsa_bi_sql_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "az-tc-sql1"
+		},
+		"ls_sufsplsa_bi_sql_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "SUFSPLSA_BI"
+		},
+		"ls_sufsplsa_bi_sql_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "engotho@sufs.org"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/ppl-git-adf')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Wait1",
+						"type": "Wait",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 1
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_adls')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('ls_adls_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('ls_adls_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_az_emabi')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('ls_az_emabi_properties_typeProperties_server')]",
+					"database": "[parameters('ls_az_emabi_properties_typeProperties_database')]",
+					"encrypt": "optional",
+					"trustServerCertificate": true,
+					"authenticationType": "SQL",
+					"userName": "[parameters('ls_az_emabi_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('ls_az_emabi_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_azuresql')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"server": "[parameters('ls_azuresql_properties_typeProperties_server')]",
+					"database": "[parameters('ls_azuresql_properties_typeProperties_database')]",
+					"encrypt": "optional",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('ls_azuresql_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('ls_azuresql_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_sqldb')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('ls_sqldb_properties_typeProperties_server')]",
+					"database": "[parameters('ls_sqldb_properties_typeProperties_database')]",
+					"encrypt": "optional",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('ls_sqldb_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('ls_sqldb_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_studentsDemographics')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('ls_studentsDemographics_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/esufsSelfHostedIR')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_delimitedText')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_studentsDemographics",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Student Demographics.csv",
+						"container": "students"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "StudentID",
+						"type": "String"
+					},
+					{
+						"name": "HouseholdID",
+						"type": "String"
+					},
+					{
+						"name": "PersonID",
+						"type": "String"
+					},
+					{
+						"name": "Programs",
+						"type": "String"
+					},
+					{
+						"name": "StudentFirstName",
+						"type": "String"
+					},
+					{
+						"name": "StudentMiddleName",
+						"type": "String"
+					},
+					{
+						"name": "StudentLastName",
+						"type": "String"
+					},
+					{
+						"name": "DateofBirth",
+						"type": "String"
+					},
+					{
+						"name": "Gender",
+						"type": "String"
+					},
+					{
+						"name": "Race",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_studentsDemographics')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_emabi_azuredb')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_az_emabi",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "az_BusinessOfferings"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_az_emabi')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_studentsDemographicsADLS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_adls",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@concat(\n    'DemographicList_',\n    substring(utcNow(), 0, 10),\n    '.csv'\n)",
+							"type": "Expression"
+						},
+						"fileSystem": "studentdemographic"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_adls')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_studentsDemographicsSQL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sqldb",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "StudentID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "HouseholdID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PersonID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "StudentFirstName",
+						"type": "varchar"
+					},
+					{
+						"name": "StudentMiddleName",
+						"type": "varchar"
+					},
+					{
+						"name": "StudentLastName",
+						"type": "varchar"
+					},
+					{
+						"name": "DateofBirth",
+						"type": "date"
+					},
+					{
+						"name": "Gender",
+						"type": "varchar"
+					},
+					{
+						"name": "Race",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "ema_az",
+					"table": "StudentsDemographics"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sqldb')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_studentsDemogrphicsBLOB')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_studentsDemographics",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Student Demographics.csv",
+						"container": "students"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "StudentID",
+						"type": "String"
+					},
+					{
+						"name": "HouseholdID",
+						"type": "String"
+					},
+					{
+						"name": "PersonID",
+						"type": "String"
+					},
+					{
+						"name": "Programs",
+						"type": "String"
+					},
+					{
+						"name": "StudentFirstName",
+						"type": "String"
+					},
+					{
+						"name": "StudentMiddleName",
+						"type": "String"
+					},
+					{
+						"name": "StudentLastName",
+						"type": "String"
+					},
+					{
+						"name": "DateofBirth",
+						"type": "String"
+					},
+					{
+						"name": "Gender",
+						"type": "String"
+					},
+					{
+						"name": "Race",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_studentsDemographics')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_ema_bi_sql')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"server": "[parameters('ls_ema_bi_sql_properties_typeProperties_server')]",
+					"database": "[parameters('ls_ema_bi_sql_properties_typeProperties_database')]",
+					"encrypt": "optional",
+					"trustServerCertificate": true,
+					"authenticationType": "Windows",
+					"userName": "[parameters('ls_ema_bi_sql_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('ls_ema_bi_sql_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "esufsSelfHostedIR",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/esufsSelfHostedIR')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_sufsplsa_bi_sql')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"server": "[parameters('ls_sufsplsa_bi_sql_properties_typeProperties_server')]",
+					"database": "[parameters('ls_sufsplsa_bi_sql_properties_typeProperties_database')]",
+					"encrypt": "optional",
+					"trustServerCertificate": false,
+					"authenticationType": "Windows",
+					"userName": "[parameters('ls_sufsplsa_bi_sql_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('ls_sufsplsa_bi_sql_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "esufsSelfHostedIR",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/esufsSelfHostedIR')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_copy_from_blob_sqldb')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "copy from blob to sqldb",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "truncate table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "StudentID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "StudentID",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "HouseholdID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "HouseholdID",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "PersonID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PersonID",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "StudentFirstName",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "StudentFirstName",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "StudentMiddleName",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "StudentMiddleName",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "StudentLastName",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "StudentLastName",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DateofBirth",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "DateofBirth",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Gender",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Gender",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Race",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Race",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_studentsDemogrphicsBLOB",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_studentsDemographicsSQL",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "truncate table",
+						"type": "Script",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "ls_sqldb",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "Truncate Table [ema_az].[StudentsDemographics]"
+								}
+							],
+							"scriptBlockExecutionTimeout": "02:00:00"
+						}
+					},
+					{
+						"name": "copy sqldb to adls",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "copy from blob to sqldb",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_studentsDemographicsSQL",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_studentsDemographicsADLS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-08-20T12:57:39Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_studentsDemogrphicsBLOB')]",
+				"[concat(variables('factoryId'), '/datasets/ds_studentsDemographicsSQL')]",
+				"[concat(variables('factoryId'), '/linkedServices/ls_sqldb')]",
+				"[concat(variables('factoryId'), '/datasets/ds_studentsDemographicsADLS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_emabi_sqldb')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_ema_bi_sql",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "BusinessOfferingsID_Persisted",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "BusinessServiceOfferingNK",
+						"type": "varchar"
+					},
+					{
+						"name": "BusinessProfileNK",
+						"type": "varchar"
+					},
+					{
+						"name": "LegalBusinessName",
+						"type": "varchar"
+					},
+					{
+						"name": "ServiceCategoryNK",
+						"type": "varchar"
+					},
+					{
+						"name": "ServiceCategory",
+						"type": "varchar"
+					},
+					{
+						"name": "ServiceTypeNK",
+						"type": "varchar"
+					},
+					{
+						"name": "ServiceType",
+						"type": "varchar"
+					},
+					{
+						"name": "Rate",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "RatePeriod",
+						"type": "varchar"
+					},
+					{
+						"name": "AssignedToNK",
+						"type": "varchar"
+					},
+					{
+						"name": "AssignedToName",
+						"type": "varchar"
+					},
+					{
+						"name": "AssignedDate",
+						"type": "date"
+					},
+					{
+						"name": "ProcessingStartDate",
+						"type": "date"
+					},
+					{
+						"name": "ProcessingCompleteDate",
+						"type": "date"
+					},
+					{
+						"name": "Description",
+						"type": "varchar"
+					},
+					{
+						"name": "ProgramType",
+						"type": "varchar"
+					},
+					{
+						"name": "ApprovedProgramNK",
+						"type": "varchar"
+					},
+					{
+						"name": "IsActive",
+						"type": "bit"
+					},
+					{
+						"name": "ExternalStatus",
+						"type": "varchar"
+					},
+					{
+						"name": "InsertDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "InsertUser",
+						"type": "varchar"
+					},
+					{
+						"name": "UpdateDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "IsDeleted",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "ema",
+					"table": "BusinessOfferings_Persisted"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_ema_bi_sql')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_copy_sqldb_to_azuredb')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "copy_sqldb_to_azuredb",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_emabi_sqldb",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_emabi_azuredb",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-08-28T14:07:32Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_emabi_sqldb')]",
+				"[concat(variables('factoryId'), '/datasets/ds_emabi_azuredb')]"
+			]
+		}
+	]
+}
